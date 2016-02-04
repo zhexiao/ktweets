@@ -7,15 +7,13 @@
 ### [Installation](#Installation)  
 
 <a name="Installation"/>
->```json
-VirtualEnv
+- VirtualEnv
     $ virtualenv -p python3 env
 
-Django 1.9.2
+- Django 1.9.2
     $ pip install django
     $ django-admin startproject kweets
 
-Mysql
+- Mysql
     $ sudo apt-get install python3-dev libmysqlclient-dev
     $ pip install mysqlclient
-> ```
