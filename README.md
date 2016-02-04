@@ -8,7 +8,9 @@
 
 <a name="Installation"/>
 - VirtualEnv
+```shell
     $ virtualenv -p python3 env
+```
 
 - Django 1.9.2
     $ pip install django
