@@ -28,13 +28,13 @@
     $ pip install redis
 ```
 
-` Gevent
+- Gevent
 ```shell
     $ pip install wheel
     $ pip install setuptools 'cython>=0.23.4' git+git://github.com/gevent/gevent.git#egg=gevent
 ```
 
-` Twitter API
+- Twitter API
 ```shell
     $ pip install TwitterAPI
 ```
