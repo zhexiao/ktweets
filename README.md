@@ -21,8 +21,20 @@
     $ django-admin startproject kweets
 ```
 
-- Mysql
+- Mysql && redis
 ```shell
     $ sudo apt-get install python3-dev libmysqlclient-dev
     $ pip install mysqlclient
+    $ pip install redis
+```
+
+` Gevent
+```shell
+    $ pip install wheel
+    $ pip install setuptools 'cython>=0.23.4' git+git://github.com/gevent/gevent.git#egg=gevent
+```
+
+` Twitter API
+```shell
+    $ pip install TwitterAPI
 ```
