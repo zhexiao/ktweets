@@ -3,8 +3,15 @@
 {% block title %}test{% endblock %}
 
 {% block content %}
+    {% verbatim %}
+    <script id="entry-template" type="text/x-handlebars-template">
+        <div class="entry">
+            <div class="body">{{text}}</div>
+        </div>
+    </script>
+    {% endverbatim %}
 
-<div class="cf-wrap">
-    
-</div>
+    <div class="cf-wrap">
+        
+    </div>
 {% endblock %}

@@ -1,13 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils import cache
-import redis
-
+from django.http import HttpResponse, StreamingHttpResponse
+import redis, time
 
 
 def index(request):
     return render(request, 'tweets/index.html')       
-
 
 
 def stream_data():
@@ -22,11 +19,10 @@ def stream_data():
     pubsub.subscribe('@NBA')
 
     for message in pubsub.listen():
-        yield "data: %s\n\n" % (message)
-
+        yield 'id: %s\n\n' % 1
+        yield 'data: %s\n\n' % message['data']
+        time.sleep(1)
 
 
 def stream(request):
-    response = HttpResponse(stream_data(), content_type="text/event-stream")
-    cache.add_never_cache_headers(response)
-    return response
+    return StreamingHttpResponse(stream_data(), content_type="text/event-stream")
