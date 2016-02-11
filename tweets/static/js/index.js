@@ -2,7 +2,7 @@ var eventSource = new EventSource("/tweets/stream");
 
 eventSource.addEventListener('message', function(e) {
     string = e.data
-    $('.cf-wrap').prepend( string + '<br><br><br>') 
+    $('.tweets-wrap').prepend( string ) 
 }, false);
 
 eventSource.addEventListener('open', function(event) {

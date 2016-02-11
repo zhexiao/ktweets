@@ -1,13 +1,35 @@
-<div class='media'>
-    <div class='media-left'>
-        <a href='https://twitter.com/{{screen_name}}' target="_blank">
-            <img class='media-object' src='{{profile_image}}' alt='{{screen_name}}'>
-        </a>
-    </div>
-    <div class='media-body'>
-        <h4 class='media-heading'>{{name}}</h4>
-        <div>
-            {{text}}
+<div class="col-md-3">
+    <div class="well">
+        {% if media  %}
+            <div class="tweets-media-wrap">
+                {% if media.type == 'photo'  %}
+                    <a href="{{media.link_url}}" target="_blank">
+                        <img src="{{media.image_url}}" class="img-responsive img-rounded">
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class='media'>
+            <div class='media-left'>
+                <a href='https://twitter.com/{{screen_name}}' target="_blank">
+                    <img class='media-object' src='{{profile_image}}' alt='{{screen_name}}'>
+                </a>
+            </div>
+            <div class='media-body'>
+                <h4 class='media-heading'>
+                    <a href='https://twitter.com/{{screen_name}}' target="_blank">{{name}}</a>
+                    <small>@{{screen_name}}</small>
+                </h4>
+                <div>
+                    {{text | cut:"0"}}
+                </div>
+                <div class="clearfix">
+                    <time class="pull-right">
+                        <span class="label label-success">{{created_at}}</span>
+                    </time>
+                </div>
+            </div>
         </div>
     </div>
 </div>

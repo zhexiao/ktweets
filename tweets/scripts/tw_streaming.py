@@ -45,6 +45,10 @@ class Streaming:
 
                 stream_res = api.request('statuses/filter', tracks_data).get_iterator()
                 for item in stream_res:
+                    # omit retweets
+                    if 'retweeted_status' in item:
+                        continue
+
                     if 'text' in item:
                         self.pool.spawn(self.redis_pub, item)
             except Exception as e:
@@ -55,7 +59,7 @@ class Streaming:
         try:                
             for mention in tweet['entities']['user_mentions']:
                 if mention['screen_name'] in self.users : 
-                   pprint( 'redis publish %s, twitter id is %s, publish date %s'%("@{0}".format(mention['screen_name']), tweet['id_str'], datetime.now()) )
+                   # pprint( 'redis publish %s, twitter id is %s, publish date %s'%("@{0}".format(mention['screen_name']), tweet['id_str'], datetime.now()) )
                    self.redis_conn.publish("@{0}".format(mention['screen_name']), json.dumps(tweet))
         except Exception as e:
             self.error_print(e)
