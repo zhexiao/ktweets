@@ -24,6 +24,7 @@
 - Mysql && redis
 ```shell
     $ sudo apt-get install python3-dev libmysqlclient-dev
+    $ sudo apt-get install redis-server
     $ pip install mysqlclient
     $ pip install redis
 ```

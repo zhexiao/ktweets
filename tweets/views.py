@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, StreamingHttpResponse
 from django.template.loader import get_template
 import ujson as json
-import sys, os, redis, time, re
+import sys, os, redis, time, re, uuid
 
 # error report message
 def error_report(error_message):
@@ -25,9 +25,10 @@ def stream_data():
     pubsub.subscribe('@NBA')
 
     for message in pubsub.listen():
-        data = stream_parse(message['data'])
+        uniqid_id = str(uuid.uuid4())
+        data = stream_parse(message['data'], uniqid_id)
 
-        yield "id: %s\n\n" % 1
+        yield "id: %s\n\n" % uniqid_id
         yield "data: %s\n\n" % data
         time.sleep(1)
 
@@ -58,7 +59,7 @@ def stream_text_convert_to_url(text):
 
 
 # filter stream data and return html
-def stream_parse(data):
+def stream_parse(data, uniqid_id):
     html = ''
 
     try:
@@ -67,6 +68,7 @@ def stream_parse(data):
         media = stream_data_media_check(json_obj)
 
         html = get_template('tweets/tweets_tpl.html').render({
+            'uniqid_id' : uniqid_id,
             'text': json_obj['text'],
             'name' : json_obj['user']['name'],
             'screen_name' : json_obj['user']['screen_name'],

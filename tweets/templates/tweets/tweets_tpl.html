@@ -1,6 +1,6 @@
 {% load tweet_tags %}
 
-<div class="col-md-3">
+<div class="col-md-3 tt-wrap" id="{{uniqid_id}}">
     <div class="well">
         {% if media  %}
             <div class="tweets-media-wrap">
@@ -33,7 +33,7 @@
                 <div class="clearfix">
                     <time class="pull-right">
                         <a href="{{url}}" target="_blank">
-                            <span class="label label-success">{{created_at}}</span>
+                            <span class="label label-success" data-toggle="tooltip" data-placement="top" title="Go to post">{{created_at}}</span>
                         </a>
                     </time>
                 </div>
