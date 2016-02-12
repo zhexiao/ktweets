@@ -1,3 +1,5 @@
+{% load tweet_tags %}
+
 <div class="col-md-3">
     <div class="well">
         {% if media  %}
@@ -6,6 +8,10 @@
                     <a href="{{media.link_url}}" target="_blank">
                         <img src="{{media.image_url}}" class="img-responsive img-rounded">
                     </a>
+                {% endif %}
+
+                {% if media.type == 'video'  %}
+                    This is Video
                 {% endif %}
             </div>
         {% endif %}
@@ -22,11 +28,13 @@
                     <small>@{{screen_name}}</small>
                 </h4>
                 <div>
-                    {{text | cut:"0"}}
+                    {{text | convert_text_to_link | safe}}
                 </div>
                 <div class="clearfix">
                     <time class="pull-right">
-                        <span class="label label-success">{{created_at}}</span>
+                        <a href="{{url}}" target="_blank">
+                            <span class="label label-success">{{created_at}}</span>
+                        </a>
                     </time>
                 </div>
             </div>

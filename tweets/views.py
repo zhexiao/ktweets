@@ -72,7 +72,8 @@ def stream_parse(data):
             'screen_name' : json_obj['user']['screen_name'],
             'profile_image' : json_obj['user']['profile_image_url'],
             'created_at' : json_obj['created_at'],
-            'media' : media
+            'media' : media,
+            'url' : 'https://twitter.com/%s/status/%s' % (json_obj['user']['screen_name'], json_obj['id_str'])
         }) 
         
         # remove \n and \r
