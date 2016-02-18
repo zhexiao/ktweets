@@ -3,7 +3,7 @@
 This is description of kweets
 
 
-Table of Contents  
+## Table of Contents  
 -------------------
 [Installation](#Installation)  
 
