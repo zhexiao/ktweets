@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="account-login-register">
+    <div class="container">
+        <div class="card"></div>
+
+        <div class="card">
+            <h1 class="title">
+                Register
+                <div class="close"></div>
+            </h1>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="input-container">
+                    <input type="text" id="Username" name="username" required="required"/>
+                    <label for="Username">Username</label>
+                    <div class="bar"></div>
+                </div>
+
+                <div class="input-container">
+                    <input type="password" id="Password" name="password" required="required"/>
+                    <label for="Password">Password</label>
+                    <div class="bar"></div>
+                </div>
+                
+                <div class="input-container">
+                    <input type="password" id="Repeat Password" name="repeat_password" required="required"/>
+                    <label for="Repeat Password">Repeat Password</label>
+                    <div class="bar"></div>
+                </div>
+
+                <div class="button-container">
+                    <input type="submit" value="Register"> 
+        
+                    <a href="{% url 'account:login' %}">Go back</a>
+                </div>
+            </form>      
+        </div>
+
+        <div class="card alt">
+            <div class="toggle"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

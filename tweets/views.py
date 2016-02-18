@@ -14,23 +14,27 @@ def index(request):
 
 # stream data
 def stream_data():
-    REDIS_CONF = {
-        'host': 'localhost',
-        'port': 6379,
-        'db': 1,
-    }
-    red = redis.StrictRedis(**REDIS_CONF)
+    try:
+        REDIS_CONF = {
+            'host': 'localhost',
+            'port': 6379,
+            'db': 1,
+        }
+        red = redis.StrictRedis(**REDIS_CONF)
 
-    pubsub = red.pubsub()
-    pubsub.subscribe('@NBA')
+        pubsub = red.pubsub()
+        pubsub.subscribe(['@NBA', '@zhexiao27'])
 
-    for message in pubsub.listen():
-        uniqid_id = str(uuid.uuid4())
-        data = stream_parse(message['data'], uniqid_id)
+        for message in pubsub.listen():
+            uniqid_id = str(uuid.uuid4())
+            data = stream_parse(message['data'], uniqid_id)
 
-        yield "id: %s\n\n" % uniqid_id
-        yield "data: %s\n\n" % data
-        time.sleep(1)
+            if data != '':
+                yield "id: %s\n\n" % uniqid_id
+                yield "data: %s\n\n" % data
+                time.sleep(1)
+    except Exception as e:
+        error_report(e)
 
 # stream handle
 def stream(request):

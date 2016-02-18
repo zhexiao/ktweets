@@ -1,9 +1,3 @@
-.tweets-wrap time {
-  margin-top: 10px;
-  display: inline-block; }
-  .tweets-wrap time a {
-    text-decoration: none; }
-
 .account-login-register {
   padding-top: 100px;
   /* Container */
@@ -238,4 +232,4 @@
     .account-login-register .form-error span {
       font-size: 13px; }
 
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=account.css.map */

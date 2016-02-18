@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tweets'
+    'tweets',
+    'account'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -81,7 +82,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'NAME' : 'kweets',
         'USER' : 'root',
-        'PASSWORD' : 'xiaozhe'
+        'PASSWORD' : ''
     }
 }
 

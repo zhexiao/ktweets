@@ -69,7 +69,7 @@ class Streaming:
 stream = Streaming()
 gevent.joinall([
     gevent.spawn(stream.mention, {
-        # "zhexiao27",
+        "zhexiao27",
         "NBA"
     })
 ])

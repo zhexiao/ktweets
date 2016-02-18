@@ -1,7 +1,10 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
+   
+   
 {% block title %}test{% endblock %}
 
 {% block content %}
     <div class="tweets-wrap row"></div>
+    <script src="{% static "js/tweets.js" %}"></script>
 {% endblock %}
