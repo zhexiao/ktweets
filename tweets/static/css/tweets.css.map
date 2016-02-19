@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AACI,iBAAI;EACA,UAAU,EAAC,IAAI;EACf,OAAO,EAAE,YAAY;EAErB,mBAAC;IACG,eAAe,EAAC,IAAI",
+"mappings": "AACI,iBAAI,CACA,UAAU,CAAC,IAAI,CACf,OAAO,CAAE,YAAY,CAErB,mBAAC,CACG,eAAe,CAAC,IAAI",
 "sources": ["../sass/tweets.scss"],
 "names": [],
 "file": "tweets.css"
