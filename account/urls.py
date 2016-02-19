@@ -1,12 +1,15 @@
 from django.conf.urls import url
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # url(r'^login/$', views.user_login, name='login'),
     # url(r'^register/$', views.user_register, name='register'),
     
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name':'account/login.html'}, name='login'),
+    url(r'^login/$', auth_views.login, {'template_name':'account/login.html'}, name='login'),
     url(r'^register/$', views.user_register, name='register'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name':'account/logout.html'}, name='logout'),
-    url(r'^logout-then-login/$', 'django.contrib.auth.views.logout_then_login', name='logout_then_login'),
+    url(r'^logout/$', auth_views.logout, {'template_name':'account/logout.html'}, name='logout'),
+    url(r'^logout-then-login/$', auth_views.logout_then_login, name='logout_then_login'),
+    # url(r'^password-change/$', auth_views.password_change, name='password_change'),
+    # url(r'^password-change/done/$', auth_views.password_change_done, name='password_change_done'),
 ]

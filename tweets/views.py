@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, StreamingHttpResponse
 from django.template.loader import get_template
+from django.contrib.auth.decorators import login_required
+
 import ujson as json
 import sys, os, redis, time, re, uuid
 
@@ -9,8 +11,11 @@ def error_report(error_message):
     print(error_message)
 
 # home page
+@login_required
 def index(request):
-    return render(request, 'tweets/index.html')       
+    return render(request, 'tweets/index.html', {
+        'section' : 'index'
+    })       
 
 # stream data
 def stream_data():
