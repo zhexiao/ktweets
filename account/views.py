@@ -24,7 +24,7 @@ def user_login(request):
             return render(request, 'account/login.html')
     except Exception as e:
         print(e)
-    
+
 
 
 def user_register(request):
