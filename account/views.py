@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 
 def user_login(request):
     try:
@@ -28,4 +28,7 @@ def user_login(request):
 
 
 def user_register(request):
-    return render(request, 'account/register.html')
+    form = RegisterForm(request.POST)
+    return render(request, 'account/register.html', {
+        form : form
+    })

@@ -3,52 +3,36 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="account-login-register">
-    <div class="container">
-        <div class="card"></div>
+<div class="account-wrap">
+    <div class="container ac-wrap">
+        <h2 class="text-center">
+            Login
+        </h2>
 
-        <div class="card">
-            <h1 class="title">Login</h1>
+        {% if form.errors %}
+            <div class="form-error text-center">
+                Your username and password didn't match.
+            </div>
+        {% endif %}
 
-            {% if form.errors %}
-                <div class="form-error text-center">
-                    <span class="label label-danger">
-                        Your username and password didn't match.
-                    </span>
+        <form action="." method="post">
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.errors }}
+
+                    {{ field.label_tag }} {{ field }}
+
+                    {% if field.help_text %}
+                        {{ field.help_text|safe }}
+                    {% endif %}
                 </div>
-            {% endif %}
+            {% endfor %}
 
-            <form action="." method="post">
-                {% csrf_token %}
-
-                <!-- remove auto complete input -->
-                <input style="display:none">
-                <input type="password" style="display:none">
-
-                <div class="input-container">
-                    <input type="text" name="username" id="Username" required="required"/>
-                    <label for="Username">Username</label>
-                    <div class="bar"></div>
-                </div>
-
-                <div class="input-container">
-                    <input type="password" id="Password" name="password" required="required"/>
-                    <label for="Password">Password</label>
-                    <div class="bar"></div>
-                </div>
-                
-                <div class="button-container">
-                    <input type="submit" value="Login"> 
-                    
-                    <a href="{% url 'account:register' %}">New User?</a>
-                    <input type="hidden" name="next" value="{{ next }}" />
-                </div>
-            </form>
-        </div>
-
-        <div class="card alt">
-            <div class="toggle"></div>
-        </div>
+            <input type="submit" class="btn btn-primary" value="Login" />
+            <a href="{% url 'account:register' %}" class="btn btn-success">New User?</a>
+            <input type="hidden" name="next" value="{{ next }}" />
+            {% csrf_token %}
+        </form>
     </div>
 </div>
 {% endblock %}
