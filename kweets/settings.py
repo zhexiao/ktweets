@@ -71,7 +71,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'NAME' : 'kweets',
         'USER' : 'root',
-        'PASSWORD' : 'xiaozhe'
+        'PASSWORD' : ''
     }
 }
 
@@ -114,6 +114,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# GMAIL SMTP server
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'zhexiaotest@gmail.com'
+EMAIL_HOST_PASSWORD = 'thisistest'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Tells Django which URL to redirect after login if the contrib.auth.views.login view gets no next parameter
 LOGIN_REDIRECT_URL = reverse_lazy('tweets:index')

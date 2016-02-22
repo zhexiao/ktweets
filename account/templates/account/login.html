@@ -5,9 +5,9 @@
 {% block content %}
 <div class="account-wrap">
     <div class="container ac-wrap">
-        <h2 class="text-center">
+        <h1 class="text-center">
             Login
-        </h2>
+        </h1>
 
         {% if form.errors %}
             <div class="form-error text-center">
@@ -31,6 +31,10 @@
             <input type="submit" class="btn btn-primary" value="Login" />
             <a href="{% url 'account:register' %}" class="btn btn-success">New User?</a>
             <input type="hidden" name="next" value="{{ next }}" />
+
+            <div class="text-center margin-top-10">
+                <a href="{% url 'account:password_reset' %}" class="btn btn-link">Forgotten your password?</a>
+            </div>
             {% csrf_token %}
         </form>
     </div>
