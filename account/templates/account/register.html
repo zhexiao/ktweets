@@ -12,13 +12,13 @@
         <form action="." method="post">
             {% for field in form %}
                 <div class="form-group">
-                    {{ field.errors }}
-
                     {{ field.label_tag }} {{ field }}
 
                     {% if field.help_text %}
                         {{ field.help_text|safe }}
                     {% endif %}
+
+                    {{ field.errors }}
                 </div>
             {% endfor %}
 

@@ -27,8 +27,21 @@ def user_login(request):
 
 
 
-def user_register(request):
-    form = RegisterForm(request.POST)
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            # Create a new user object but avoid saving it yet
+            new_user = form.save(commit=False)
+            # Set the chosen password
+            new_user.set_password( form.cleaned_data['password'] )
+            # Save the User object
+            new_user.save()
+            return render(request, 'account/register_done.html', {'new_user': new_user})
+    else:
+        form = RegisterForm()
+
     return render(request, 'account/register.html', {
-        form : form
+        'form': form
     })
