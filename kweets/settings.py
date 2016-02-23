@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'tweets',
     'account'
 ]
@@ -71,7 +72,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'NAME' : 'kweets',
         'USER' : 'root',
-        'PASSWORD' : ''
+        'PASSWORD' : 'xiaozhe'
     }
 }
 
@@ -129,3 +130,10 @@ LOGIN_REDIRECT_URL = reverse_lazy('tweets:index')
 LOGIN_URL = reverse_lazy('account:login')
 # Is the URL to redirect the user to log out
 LOGOUT_URL = reverse_lazy('account:logout')
+
+
+# rest framework config
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 2
+}

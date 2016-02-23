@@ -39,3 +39,10 @@ This is description of kweets
 ```shell
     $ pip install TwitterAPI
 ```
+
+- Django Rest Framework
+```shell
+    $ pip install djangorestframework
+    $ pip install markdown       # Markdown support for the browsable API.
+    $ pip install django-filter  # Filtering support
+```

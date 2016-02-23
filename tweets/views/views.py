@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, StreamingHttpResponse
 from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
+from tweets.models import TwitterMention
 
 import ujson as json
 import sys, os, redis, time, re, uuid
@@ -10,12 +11,21 @@ import sys, os, redis, time, re, uuid
 def error_report(error_message):
     print(error_message)
 
+
+
 # home page
 @login_required
 def index(request):
+    mention = TwitterMention(name="zhexiaotest")
+    mention.save()
+
+    current_user = request.user
+    mention.user.add(current_user)
+
     return render(request, 'tweets/index.html', {
         'section' : 'index'
-    })       
+    })
+
 
 # stream data
 def stream_data():
@@ -41,7 +51,11 @@ def stream_data():
     except Exception as e:
         error_report(e)
 
+
+
+
 # stream handle
+@login_required
 def stream(request):
     return StreamingHttpResponse(stream_data(), content_type="text/event-stream")
 
@@ -85,12 +99,11 @@ def stream_parse(data, uniqid_id):
             'created_at' : json_obj['created_at'],
             'media' : media,
             'url' : 'https://twitter.com/%s/status/%s' % (json_obj['user']['screen_name'], json_obj['id_str'])
-        }) 
-        
+        })
+
         # remove \n and \r
         html = html.replace('\n', ' ').replace('\r', '')
     except Exception as e:
-        error_report(e) 
-   
-    return html
+        error_report(e)
 
+    return html
