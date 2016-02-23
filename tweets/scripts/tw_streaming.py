@@ -3,8 +3,15 @@ from gevent.pool import Pool
 from pprint import pprint
 from TwitterAPI import TwitterAPI
 from datetime import datetime
-import gevent, sys, os, redis
+import gevent, sys, os, redis, MySQLdb
 import ujson as json
+
+
+# define database connect
+def connectDb():
+    db = MySQLdb.connect(host="localhost", user="root", passwd="", db="kweets", charset="utf8")
+    return db
+
 
 # streaming class
 class Streaming:
@@ -25,7 +32,7 @@ class Streaming:
             'db': 1,
         }
         self.redis_conn = redis.StrictRedis( **self.REDIS_CONF )
-        
+
 
     # show error function
     def error_print(self, message):
@@ -39,7 +46,7 @@ class Streaming:
         self.users = users
 
         while True:
-            try:       
+            try:
                 api = TwitterAPI(self.TW_CONSUMER_KEY, self.TW_CONSUMER_SECRET, self.TW_TOKEN, self.TW_TOKEN_SECRET)
                 tracks_data = { 'track' : "@{0}".format( ",@".join(self.users ) ) }
 
@@ -56,20 +63,38 @@ class Streaming:
 
 
     def redis_pub(self, tweet):
-        try:                
+        try:
             for mention in tweet['entities']['user_mentions']:
-                if mention['screen_name'] in self.users : 
+                if mention['screen_name'] in self.users :
                    # pprint( 'redis publish %s, twitter id is %s, publish date %s'%("@{0}".format(mention['screen_name']), tweet['id_str'], datetime.now()) )
                    self.redis_conn.publish("@{0}".format(mention['screen_name']), json.dumps(tweet))
         except Exception as e:
             self.error_print(e)
 
 
+
+
+# get mentions
+def getMentions():
+    db = connectDb()
+    cursor = db.cursor(MySQLdb.cursors.DictCursor)
+    query = ('''SELECT name FROM twitter_mention''')
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    cursor.close()
+    db.close()
+    return rows
+
+
+# mention container
+mentions_data = []
+mentions_res = getMentions()
+for men in mentions_res:
+    mentions_data.append(men['name'])
+
+
 # initial class
 stream = Streaming()
 gevent.joinall([
-    gevent.spawn(stream.mention, {
-        "zhexiao27",
-        "NBA"
-    })
+    gevent.spawn(stream.mention, mentions_data)
 ])

@@ -3,6 +3,7 @@ from django.http import HttpResponse, StreamingHttpResponse
 from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
 from tweets.models import TwitterMention
+from pprint import pprint
 
 import ujson as json
 import sys, os, redis, time, re, uuid
@@ -16,11 +17,18 @@ def error_report(error_message):
 # home page
 @login_required
 def index(request):
-    mention = TwitterMention(name="zhexiaotest")
-    mention.save()
+    mention_data = 'zhexiao27'
 
+    try:
+        tm = TwitterMention.objects.get(name=mention_data)
+    except Exception as e:
+        tm = TwitterMention(name=mention_data)
+        tm.save()
+
+
+    # add this mention id xref to user
     current_user = request.user
-    mention.user.add(current_user)
+    tm.user.add(current_user)
 
     return render(request, 'tweets/index.html', {
         'section' : 'index'
@@ -28,7 +36,8 @@ def index(request):
 
 
 # stream data
-def stream_data():
+@login_required
+def stream_data(request):
     try:
         REDIS_CONF = {
             'host': 'localhost',
@@ -37,8 +46,15 @@ def stream_data():
         }
         red = redis.StrictRedis(**REDIS_CONF)
 
+        # get users mention data
+        mentions = request.user.tw_mention.values_list('name', flat=True).order_by('name')
+        mentions_with_tag = []
+        for men in mentions:
+            mentions_with_tag.append('@'+men)
+
         pubsub = red.pubsub()
-        pubsub.subscribe(['@NBA', '@zhexiao27'])
+        # subscribe data
+        pubsub.subscribe(mentions_with_tag)
 
         for message in pubsub.listen():
             uniqid_id = str(uuid.uuid4())
@@ -57,7 +73,7 @@ def stream_data():
 # stream handle
 @login_required
 def stream(request):
-    return StreamingHttpResponse(stream_data(), content_type="text/event-stream")
+    return StreamingHttpResponse(stream_data(request), content_type="text/event-stream")
 
 
 # check the data image and video

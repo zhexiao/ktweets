@@ -72,7 +72,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'NAME' : 'kweets',
         'USER' : 'root',
-        'PASSWORD' : 'xiaozhe'
+        'PASSWORD' : ''
     }
 }
 
