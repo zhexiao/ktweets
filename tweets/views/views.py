@@ -17,21 +17,11 @@ def error_report(error_message):
 # home page
 @login_required
 def index(request):
-    mention_data = 'zhexiao27'
-
-    try:
-        tm = TwitterMention.objects.get(name=mention_data)
-    except Exception as e:
-        tm = TwitterMention(name=mention_data)
-        tm.save()
-
-
-    # add this mention id xref to user
-    current_user = request.user
-    tm.user.add(current_user)
+    mentions = request.user.tw_mention.all()
 
     return render(request, 'tweets/index.html', {
-        'section' : 'index'
+        'section' : 'index',
+        'mentions' : mentions
     })
 
 
@@ -123,3 +113,24 @@ def stream_parse(data, uniqid_id):
         error_report(e)
 
     return html
+
+
+@login_required
+def save_stream(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        type = request.POST['type']
+
+        if type == '@':
+            try:
+                tm = TwitterMention.objects.get(name=name)
+            except Exception as e:
+                tm = TwitterMention(name=name)
+                tm.save()
+
+
+            # add this mention id xref to user
+            current_user = request.user
+            tm.user.add(current_user)
+
+    return HttpResponse('123')

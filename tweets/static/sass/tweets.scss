@@ -8,3 +8,66 @@
         }
     }
 }
+
+
+.ti-lists{
+    .alert{
+        display: inline-block;
+        padding: 5px 30px 5px 20px;
+        margin-top: 10px;
+        margin-right: 10px;
+        position: relative;
+
+        .fa{
+            cursor: pointer;
+            position: absolute;
+            right: 5px;
+            top: 8px;
+
+            &:hover{
+                color:#999;
+            }
+        }
+    }
+}
+
+.ti-input-wrap{
+    position: relative;
+
+    .form-group{
+        margin-bottom: 0;
+    }
+
+    .ti-input{
+        padding-right: 60px;
+    }
+
+    .dul-name-wrap{
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        color:#fff;
+        position: absolute;
+        right: 0;
+        top:0;
+        z-index: 12;
+    }
+}
