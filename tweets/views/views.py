@@ -41,6 +41,7 @@ def stream_data(request):
         mentions_with_tag = []
         for men in mentions:
             mentions_with_tag.append('@'+men)
+            
 
         pubsub = red.pubsub()
         # subscribe data
@@ -133,4 +134,21 @@ def save_stream(request):
             current_user = request.user
             tm.user.add(current_user)
 
-    return HttpResponse('123')
+    return HttpResponse(1)
+
+
+@login_required
+def delete_stream(request):
+    if request.method == "POST":
+        id = request.POST['id']
+        type = request.POST['type']
+
+        if type == '@':
+            try:
+                tm = TwitterMention.objects.get(id=id)
+                current_user = request.user
+                tm.user.remove(current_user)
+            except Exception as e:
+                error_report(e)
+
+    return HttpResponse(1)

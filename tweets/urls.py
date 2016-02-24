@@ -5,6 +5,7 @@ urlpatterns = [
     url(r'^app$', views.index, name='index'),
     url(r'^stream$', views.stream, name='stream'),
     url(r'^save_stream$', views.save_stream, name='save_stream'),
+    url(r'^delete_stream$', views.delete_stream, name='delete_stream'),
 
     url(r'^twitter_mention/lists\/?$', twitter_mention_view.TwitterMentionLists.as_view()),
 ]

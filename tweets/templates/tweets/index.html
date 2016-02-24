@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="dul-name-wrap" onclick="save_data(event);">Save</div>
+            <div class="dul-name-wrap" onclick="save_data(event);" data-type="@">Save</div>
             {% csrf_token %}
         </div>
 
@@ -22,7 +22,7 @@
             {% for men in mentions %}
                 <div class="alert alert-info">
                     @{{men.name}}
-                    <i class="fa fa-times" onclick="remove_data(event)" data-id="{{men.id}}"></i>
+                    <i class="fa fa-times" onclick="remove_data(event)" data-id="{{men.id}}" data-type="@"></i>
                 </div>
             {% endfor %}
         </div>
