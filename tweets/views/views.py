@@ -38,15 +38,22 @@ def stream_data(request):
 
         # get users mention data
         mentions = request.user.tw_mention.values_list('name', flat=True).order_by('name')
-        mentions_with_tag = []
-        for men in mentions:
-            mentions_with_tag.append('@'+men)
-            
+        # if exist mentions, get these data
+        if mentions:
+            mentions_with_tag = []
+            for men in mentions:
+                mentions_with_tag.append('@'+men)
+        # if not exist mentions, tracking heartbeat(@@hb) to keep stream live
+        else:
+            mentions_with_tag = ['@@hb']
 
+
+        # start initial pubsub
         pubsub = red.pubsub()
         # subscribe data
         pubsub.subscribe(mentions_with_tag)
 
+        # listen published data
         for message in pubsub.listen():
             uniqid_id = str(uuid.uuid4())
             data = stream_parse(message['data'], uniqid_id)
@@ -67,6 +74,7 @@ def stream(request):
     return StreamingHttpResponse(stream_data(request), content_type="text/event-stream")
 
 
+
 # check the data image and video
 def stream_data_media_check(data):
     media = {}
@@ -81,11 +89,6 @@ def stream_data_media_check(data):
         error_report(e)
 
     return media
-
-
-# convert plain text to a clickable link
-def stream_text_convert_to_url(text):
-    pass
 
 
 # filter stream data and return html
@@ -114,6 +117,7 @@ def stream_parse(data, uniqid_id):
         error_report(e)
 
     return html
+
 
 
 @login_required
