@@ -7,12 +7,6 @@ import gevent, sys, os, redis, MySQLdb
 import ujson as json
 
 
-# define database connect
-def connectDb():
-    db = MySQLdb.connect(host="localhost", user="root", passwd="xiaozhe", db="kweets", charset="utf8")
-    return db
-
-
 # streaming class
 class Streaming:
     def __init__(self):
@@ -25,7 +19,18 @@ class Streaming:
         self.THREAD_POOL_SIZE = 200
         self.pool = Pool(self.THREAD_POOL_SIZE)
 
-        # init redis connection
+        # connect db
+        self.connect_db_redis()
+
+
+    # define database connect
+    def connect_db_mysql(self):
+        db = MySQLdb.connect(host="localhost", user="root", passwd="xiaozhe", db="kweets", charset="utf8")
+        return db
+
+
+    # define redis connect
+    def connect_db_redis(self):
         self.REDIS_CONF = {
             'host': 'localhost',
             'port': 6379,
@@ -62,6 +67,7 @@ class Streaming:
                 self.error_print(e)
 
 
+    # redis publish method
     def redis_pub(self, tweet):
         try:
             for mention in tweet['entities']['user_mentions']:
@@ -72,36 +78,76 @@ class Streaming:
             self.error_print(e)
 
 
+    # get mysql mentions
+    def get_db_mentions(self):
+        try:
+            db = self.connect_db_mysql()
+            cursor = db.cursor(MySQLdb.cursors.DictCursor)
+            query = ('''SELECT * FROM twitter_mention order by id desc''')
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            cursor.close()
+            db.close()
+
+            mentions_data = []
+            if rows:
+                for mention in rows:
+                    mentions_data.append(mention['name'])
+
+            return mentions_data
+        except Exception as e:
+            self.error_print(e)
 
 
-# get mentions
-def getMentions():
-    db = connectDb()
-    cursor = db.cursor(MySQLdb.cursors.DictCursor)
-    query = ('''SELECT name FROM twitter_mention''')
-    cursor.execute(query)
-    rows = cursor.fetchall()
-    cursor.close()
-    db.close()
-    return rows
+    # get the last mention id
+    def get_last_mention_id(self):
+        try:
+            db = self.connect_db_mysql()
+            cursor = db.cursor(MySQLdb.cursors.DictCursor)
+            query = ('''SELECT id FROM twitter_mention order by id desc limit 1''')
+            cursor.execute(query)
+            rows = cursor.fetchone()
+            cursor.close()
+            db.close()
 
+            if rows:
+                return rows['id']
+            else:
+                return None
+        except Exception as e:
+            self.error_print(e)
 
-# mention container
-mentions_data = []
-mentions_res = getMentions()
-for men in mentions_res:
-    mentions_data.append(men['name'])
 
 
 # initial class
 stream = Streaming()
-new_data = True
+# get mention data
+mentions_data = stream.get_db_mentions()
+latest_mention_id = stream.get_last_mention_id()
+
+# start running streaming
+streaming_stopped = True
 while True:
     try:
-        if new_data:
-            ge = gevent.spawn(stream.mention, mentions_data)
-            new_data = False
-            print(ge.started)
+        # get the last insert mention id
+        last_insert_mention_id = stream.get_last_mention_id()
+
+        # check streaming is running or not
+        if streaming_stopped:
+            # running thread
+            thread_m = gevent.spawn(stream.mention, mentions_data)
+
+            # if thread start, set stop variable to false
+            streaming_stopped = not thread_m.started
+
+        # if last insert mention id is changed
+        if last_insert_mention_id != latest_mention_id:
+            # kill thread and get new mention data
+            thread_m.kill()
+            streaming_stopped = True
+            mentions_data = stream.get_db_mentions()
+            latest_mention_id = last_insert_mention_id
+
 
         gevent.sleep(10)
     except Exception as e:
