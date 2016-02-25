@@ -9,7 +9,7 @@ import ujson as json
 
 # define database connect
 def connectDb():
-    db = MySQLdb.connect(host="localhost", user="root", passwd="", db="kweets", charset="utf8")
+    db = MySQLdb.connect(host="localhost", user="root", passwd="xiaozhe", db="kweets", charset="utf8")
     return db
 
 
@@ -95,6 +95,14 @@ for men in mentions_res:
 
 # initial class
 stream = Streaming()
-gevent.joinall([
-    gevent.spawn(stream.mention, mentions_data)
-])
+new_data = True
+while True:
+    try:
+        if new_data:
+            ge = gevent.spawn(stream.mention, mentions_data)
+            new_data = False
+            print(ge.started)
+
+        gevent.sleep(10)
+    except Exception as e:
+        print(e)
