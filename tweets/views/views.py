@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, StreamingHttpResponse
 from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from tweets.models import TwitterMention
 from pprint import pprint
 
@@ -30,9 +31,9 @@ def index(request):
 def stream_data(request):
     try:
         REDIS_CONF = {
-            'host': 'localhost',
-            'port': 6379,
-            'db': 1,
+            'host': settings.REDIS_DB_HOST,
+            'port': settings.REDIS_PORT,
+            'db': settings.REDIS_DB_NUMBER,
         }
         red = redis.StrictRedis(**REDIS_CONF)
 

@@ -5,18 +5,18 @@ from TwitterAPI import TwitterAPI
 from datetime import datetime
 import gevent, sys, os, redis, MySQLdb
 import ujson as json
-
+from config_import import *
 
 # streaming class
 class Streaming:
     def __init__(self):
-        self.TW_CONSUMER_KEY = 'uEgl4FaX6FEP0H578gocLsTMe'
-        self.TW_CONSUMER_SECRET = 'C4tPkIhjRKg4pj5qCEKAAclpAUt3s0KdDmobSzJkovcQEsEYMA'
-        self.TW_TOKEN = '2820265982-jYjVyzNb7vm96Lk3f1uzvRJt91OyC39ni8TD5q7'
-        self.TW_TOKEN_SECRET = '5ID7bK6Zp8j81W9I1sXxTwiltYKQwsKZE4o8pzLLK4ico'
+        self.TW_CONSUMER_KEY = TW_CONSUMER_KEY
+        self.TW_CONSUMER_SECRET = TW_CONSUMER_SECRET
+        self.TW_TOKEN = TW_TOKEN
+        self.TW_TOKEN_SECRET = TW_TOKEN_SECRET
 
         # set a limit pool thread for redis pub
-        self.THREAD_POOL_SIZE = 200
+        self.THREAD_POOL_SIZE = REDIS_POLL_SIZE
         self.pool = Pool(self.THREAD_POOL_SIZE)
 
         # connect db
@@ -25,16 +25,16 @@ class Streaming:
 
     # define database connect
     def connect_db_mysql(self):
-        db = MySQLdb.connect(host="localhost", user="root", passwd="xiaozhe", db="kweets", charset="utf8")
+        db = MySQLdb.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASSWORD, db=DB_NAME, charset="utf8")
         return db
 
 
     # define redis connect
     def connect_db_redis(self):
         self.REDIS_CONF = {
-            'host': 'localhost',
-            'port': 6379,
-            'db': 1,
+            'host': REDIS_DB_HOST,
+            'port': REDIS_PORT,
+            'db': REDIS_DB_NUMBER,
         }
         self.redis_conn = redis.StrictRedis( **self.REDIS_CONF )
 

@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
 import os
+from .config_import import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -69,10 +70,10 @@ WSGI_APPLICATION = 'kweets.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',
-        'NAME' : 'kweets',
-        'USER' : 'root',
-        'PASSWORD' : 'xiaozhe'
+        'HOST': DB_HOST,
+        'NAME' : DB_NAME,
+        'USER' : DB_USER,
+        'PASSWORD' : DB_PASSWORD
     }
 }
 
@@ -115,14 +116,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-# GMAIL SMTP server
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'zhexiaotest@gmail.com'
-EMAIL_HOST_PASSWORD = 'thisistest'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
 # Tells Django which URL to redirect after login if the contrib.auth.views.login view gets no next parameter
 LOGIN_REDIRECT_URL = reverse_lazy('tweets:index')
