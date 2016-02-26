@@ -14,6 +14,16 @@ def error_report(error_message):
     print(error_message)
 
 
+def get_ip(request):
+    http_x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+    if http_x_forwarded_for:
+        ip_address = http_x_forwarded_for.split(',')[0]
+    else:
+        ip_address = request.META.get('REMOTE_ADDR')
+
+    return ip_address
+
 
 # home page
 @login_required
@@ -51,18 +61,33 @@ def stream_data(request):
 
         # start initial pubsub
         pubsub = red.pubsub()
-        # subscribe data
+
+        # publish a connection killer signal, uniqid id is user ip address
+        kill_signal_data =  ('{0}_{1}').format('ip', str(get_ip(request)))
+        red.publish('__clear__', kill_signal_data)
+
+        # subscribe all data include the killer as well
+        mentions_with_tag.append('__clear__')
         pubsub.subscribe(mentions_with_tag)
 
         # listen published data
         for message in pubsub.listen():
             uniqid_id = str(uuid.uuid4())
-            data = stream_parse(message['data'], uniqid_id)
+            # if the channel is killer, start clear dead connection
+            if message['channel'].decode('utf-8') == '__clear__':
+                try:
+                    if message['data'].decode('utf-8') == kill_signal_data:
+                        pubsub.unsubscribe()
+                        break
+                except Exception as e:
+                    pass
+            else:
+                data = stream_parse(message['data'], uniqid_id)
 
-            if data != '':
-                yield "id: %s\n\n" % uniqid_id
-                yield "data: %s\n\n" % data
-                time.sleep(1)
+                if data != '':
+                    yield "id: %s\n\n" % uniqid_id
+                    yield "data: %s\n\n" % data
+                    time.sleep(1)
     except Exception as e:
         error_report(e)
 
