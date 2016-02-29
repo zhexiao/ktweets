@@ -5,9 +5,9 @@
 {% block title %}test{% endblock %}
 
 {% block content %}
-    <div class="tweets-init col-md-8 col-md-offset-2">
+    <div class="tweets-init">
         <div class="clearfix ti-input-wrap">
-            <div class="form-group">
+            <div class="form-group tiw-form-group">
                 <div class="input-group">
                     <div class="input-group-addon tiw-sign">@</div>
                     <input type="text" value="" placeholder="Type your search data ..." class="form-control ti-input" />
@@ -20,7 +20,7 @@
 
         <div class="ti-lists clearfix">
             {% for men in mentions %}
-                <div class="alert alert-grey">
+                <div class="alert alert-purple">
                     @{{men.name}}
                     <i class="fa fa-times" onclick="remove_data(event)" data-id="{{men.id}}" data-type="@"></i>
                 </div>

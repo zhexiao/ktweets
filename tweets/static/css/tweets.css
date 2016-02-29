@@ -6,6 +6,17 @@
   display: inline-block; }
   .tweets-wrap time a {
     text-decoration: none; }
+.tweets-wrap .well {
+  background-color: #fff;
+  border: 3px solid #fff; }
+  .tweets-wrap .well:hover {
+    border: 3px solid #67809F;
+    -khtml-transition: all 0.6s;
+    -webkit-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    -ms-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    transition: all 0.6s; }
 
 .ti-lists .alert {
   display: inline-block;
@@ -13,7 +24,8 @@
   margin-top: 10px;
   margin-right: 10px;
   position: relative;
-  border-radius: 0; }
+  border-radius: 0;
+  margin-bottom: 10px; }
   .ti-lists .alert .fa {
     cursor: pointer;
     position: absolute;
@@ -30,8 +42,18 @@
 
 .alert-purple {
   color: #fff;
-  background-color: #61527b;
-  border-color: #5c4e75; }
+  background-color: #703688;
+  border-color: #6a3381; }
+
+.tweets-init {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px; }
+  .tweets-init .tiw-form-group .input-group, .tweets-init .tiw-form-group input {
+    height: 40px; }
+  .tweets-init .tiw-form-group input {
+    font-size: 18px;
+    outline: 0; }
 
 .alert-grey {
   color: #FFF;
@@ -46,7 +68,7 @@
     padding-right: 60px; }
   .ti-input-wrap .dul-name-wrap {
     display: inline-block;
-    padding: 6px 12px 7px 12px;
+    padding: 10px 20px;
     margin-bottom: 0;
     font-size: 14px;
     font-weight: 400;
