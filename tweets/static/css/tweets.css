@@ -1,3 +1,6 @@
+.navbar-default {
+  border-radius: 0; }
+
 .tweets-wrap time {
   margin-top: 10px;
   display: inline-block; }
@@ -9,14 +12,31 @@
   padding: 5px 30px 5px 20px;
   margin-top: 10px;
   margin-right: 10px;
-  position: relative; }
+  position: relative;
+  border-radius: 0; }
   .ti-lists .alert .fa {
     cursor: pointer;
     position: absolute;
     right: 5px;
     top: 8px; }
     .ti-lists .alert .fa:hover {
-      color: #999; }
+      color: #FB769C;
+      -khtml-transition: all 0.6s;
+      -webkit-transition: all 0.6s;
+      -moz-transition: all 0.6s;
+      -ms-transition: all 0.6s;
+      -o-transition: all 0.6s;
+      transition: all 0.6s; }
+
+.alert-purple {
+  color: #fff;
+  background-color: #61527b;
+  border-color: #5c4e75; }
+
+.alert-grey {
+  color: #FFF;
+  background-color: #3b4448;
+  border-color: #363e42; }
 
 .ti-input-wrap {
   position: relative; }
@@ -26,7 +46,7 @@
     padding-right: 60px; }
   .ti-input-wrap .dul-name-wrap {
     display: inline-block;
-    padding: 6px 12px;
+    padding: 6px 12px 7px 12px;
     margin-bottom: 0;
     font-size: 14px;
     font-weight: 400;
@@ -42,8 +62,8 @@
     -ms-user-select: none;
     user-select: none;
     background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
+    border: 0;
+    border-radius: 0;
     background-color: #337ab7;
     border-color: #2e6da4;
     color: #fff;
@@ -51,5 +71,15 @@
     right: 0;
     top: 0;
     z-index: 12; }
+    .ti-input-wrap .dul-name-wrap:hover {
+      color: #fff;
+      background-color: #286090;
+      border-color: #204d74;
+      -khtml-transition: all 0.6s;
+      -webkit-transition: all 0.6s;
+      -moz-transition: all 0.6s;
+      -ms-transition: all 0.6s;
+      -o-transition: all 0.6s;
+      transition: all 0.6s; }
 
 /*# sourceMappingURL=tweets.css.map */
