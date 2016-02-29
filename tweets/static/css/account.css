@@ -1,42 +1,139 @@
-.account-wrap .ac-wrap {
-  padding: 20px 40px 30px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px #dfdfdf;
-  width: 600px;
-  margin: 0 auto; }
-.account-wrap label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: 700; }
-.account-wrap input[type=text], .account-wrap input[type=password], .account-wrap input[type=email] {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; }
-.account-wrap .form-group ul li, .account-wrap form ul li {
-  color: #999;
-  font-size: 12px;
-  margin-top: 5px; }
-.account-wrap .form-group .errorlist li, .account-wrap form .errorlist li {
-  color: #D91E18; }
-.account-wrap .form-error {
-  color: #D91E18;
-  margin-bottom: 20px; }
-.account-wrap .margin-top-10 {
-  margin-top: 10px; }
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzI3MjgzOCIvPjxzdG9wIG9mZnNldD0iMzMuMzMzMzMlIiBzdG9wLWNvbG9yPSIjMmIyZDQxIi8+PHN0b3Agb2Zmc2V0PSI2Ni42NjY2NyUiIHN0b3AtY29sb3I9IiMzOTM1NDkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0MzM1NDUiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=");
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #272838), color-stop(33.33333%, #2b2d41), color-stop(66.66667%, #393549), color-stop(100%, #433545));
+  background: -moz-linear-gradient(left, #272838, #2b2d41, #393549, #433545);
+  background: -webkit-linear-gradient(left, #272838, #2b2d41, #393549, #433545);
+  background: linear-gradient(to right, #272838, #2b2d41, #393549, #433545); }
+
+.account-wrap {
+  padding-top: 100px; }
+  .account-wrap .btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+  .account-wrap .btn-success {
+    color: #fff;
+    background-color: #36c6d3;
+    border-color: #2bb8c4; }
+    .account-wrap .btn-success:hover {
+      color: #fff;
+      background-color: #27a4b0;
+      border-color: #208992; }
+  .account-wrap .ac-wrap {
+    padding: 0;
+    border-radius: 5px;
+    width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 0; }
+  .account-wrap .aw-head {
+    background-color: #e7505a;
+    margin: 0;
+    padding: 20px;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-size: 26px; }
+  .account-wrap .ac-form {
+    padding: 20px; }
+  .account-wrap .ac-submit {
+    margin-right: 20px; }
+  .account-wrap .tw-forgot-passwd {
+    font-size: 12px; }
+  .account-wrap .sn-login {
+    padding: 20px;
+    border-top: 1px solid #dfdfdf; }
+  .account-wrap .sn-twitter-login {
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    color: #fff;
+    padding: 12px;
+    border-radius: 2px;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #4099ff;
+    text-decoration: none; }
+  .account-wrap label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700; }
+  .account-wrap input[type=text], .account-wrap input[type=password], .account-wrap input[type=email] {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    outline: 0;
+    border-radius: 0; }
+  .account-wrap .form-group ul li, .account-wrap form ul li {
+    color: #999;
+    font-size: 12px;
+    margin-top: 5px; }
+  .account-wrap .form-group .errorlist, .account-wrap form .errorlist {
+    list-style-type: none;
+    padding-top: 10px; }
+    .account-wrap .form-group .errorlist li, .account-wrap form .errorlist li {
+      margin: 0;
+      padding: 5px 30px 5px 15px;
+      border-left: 5px solid #eee;
+      background-color: #F5A9AE;
+      border-color: #e7505a;
+      color: #000; }
+  .account-wrap .help-text {
+    margin: 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    background-color: #c0edf1;
+    border-color: #58d0da;
+    color: #000;
+    margin-top: 5px; }
+    .account-wrap .help-text ul li {
+      color: #000; }
+  .account-wrap .note-wrap {
+    padding: 60px 40px;
+    border-left: 10px solid #eee;
+    background-color: #fff;
+    border-color: #bbb;
+    color: #000;
+    width: 100%;
+    border-radius: 0;
+    text-align: center; }
+    .account-wrap .note-wrap h1 {
+      margin-bottom: 40px; }
+  .account-wrap .form-error {
+    margin: 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    background-color: #F5A9AE;
+    border-color: #e7505a;
+    color: #000; }
+  .account-wrap .margin-top-10 {
+    margin-top: 10px; }
 
 /*# sourceMappingURL=account.css.map */

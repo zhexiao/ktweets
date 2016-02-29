@@ -5,24 +5,26 @@
 {% block content %}
 <div class="account-wrap">
     <div class="container ac-wrap">
-        <h1 class="text-center">
+        <h1 class="text-center aw-head">
             Register
         </h1>
 
-        <form action="." method="post">
+        <form action="." method="post" class="ac-form">
             {% for field in form %}
                 <div class="form-group">
                     {{ field.label_tag }} {{ field }}
 
                     {% if field.help_text %}
+                        <div class="help-text">
                         {{ field.help_text|safe }}
+                        </div>
                     {% endif %}
 
                     {{ field.errors }}
                 </div>
             {% endfor %}
 
-            <input type="submit" class="btn btn-primary" value="Register" />
+            <input type="submit" class="btn btn-primary ac-submit" value="Register" />
             <a href="{% url 'account:login' %}" class="btn btn-success">Go back</a>
 
             {% csrf_token %}

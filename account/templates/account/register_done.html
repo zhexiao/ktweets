@@ -3,6 +3,15 @@
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
-<h1>Welcome {{ new_user.username }}!</h1>
-<p>Your account has been successfully created. Now you can <a href="{% url 'account:login' %}">log in</a>.</p>
+<div class="account-wrap">
+    <div class="container ac-wrap note-wrap">
+        <h1 class="text-center">
+            Welcome {{ new_user.username }}!
+        </h1>
+        <p>
+            Your account has been successfully created. Now you can
+            <a href="{% url 'account:login' %}">log in</a>
+        </p>
+    </div>
+</div>
 {% endblock %}

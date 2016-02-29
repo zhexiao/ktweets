@@ -5,7 +5,7 @@
 {% block content %}
 <div class="account-wrap">
     <div class="container ac-wrap">
-        <h1 class="text-center">
+        <h1 class="text-center aw-head">
             Login
         </h1>
 
@@ -15,28 +15,36 @@
             </div>
         {% endif %}
 
-        <form action="." method="post">
+        <form action="." method="post" class="ac-form">
             {% for field in form %}
                 <div class="form-group">
-                    {{ field.errors }}
-
                     {{ field.label_tag }} {{ field }}
 
                     {% if field.help_text %}
+                        <div class="help-text">
                         {{ field.help_text|safe }}
+                        </div>
                     {% endif %}
+
+                    {{ field.errors }}
                 </div>
             {% endfor %}
 
-            <input type="submit" class="btn btn-primary" value="Login" />
+            <input type="submit" class="btn btn-primary ac-submit" value="Login" />
             <a href="{% url 'account:register' %}" class="btn btn-success">New User?</a>
             <input type="hidden" name="next" value="{{ next }}" />
 
             <div class="text-center margin-top-10">
-                <a href="{% url 'account:password_reset' %}" class="btn btn-link">Forgotten your password?</a>
+                <a href="{% url 'account:password_reset' %}" class="btn btn-link tw-forgot-passwd">Forgotten your password?</a>
             </div>
             {% csrf_token %}
         </form>
+
+        <div class="sn-login text-center">
+            <a href="#" class="sn-twitter-login">
+                <i class="fa fa-twitter"></i> Login in with twitter
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}
