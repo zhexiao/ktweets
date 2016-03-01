@@ -50,21 +50,20 @@ class Streaming:
     def mention(self, users):
         self.users = users
 
-        while True:
-            try:
-                api = TwitterAPI(self.TW_CONSUMER_KEY, self.TW_CONSUMER_SECRET, self.TW_TOKEN, self.TW_TOKEN_SECRET)
-                tracks_data = { 'track' : "@{0}".format( ",@".join(self.users ) ) }
+        try:
+            api = TwitterAPI(self.TW_CONSUMER_KEY, self.TW_CONSUMER_SECRET, self.TW_TOKEN, self.TW_TOKEN_SECRET)
+            tracks_data = { 'track' : "@{0}".format( ",@".join(self.users ) ) }
 
-                stream_res = api.request('statuses/filter', tracks_data).get_iterator()
-                for item in stream_res:
-                    # omit retweets
-                    if 'retweeted_status' in item:
-                        continue
+            stream_res = api.request('statuses/filter', tracks_data).get_iterator()
+            for item in stream_res:
+                # omit retweets
+                if 'retweeted_status' in item:
+                    continue
 
-                    if 'text' in item:
-                        self.pool.spawn(self.redis_pub, item)
-            except Exception as e:
-                self.error_print(e)
+                if 'text' in item:
+                    self.pool.spawn(self.redis_pub, item)
+        except Exception as e:
+            self.error_print(e)
 
 
     # redis publish method
