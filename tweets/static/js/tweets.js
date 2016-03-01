@@ -1,17 +1,35 @@
-var eventSource = new EventSource("/tweets/stream");
+var eventSource = new EventSource("/tweets/stream"),
+    tweets_wrap = $('.tweets-wrap');
 
+// listen message event
 eventSource.addEventListener('message', function(e) {
     var res_html = e.data,
         id = e.lastEventId;
 
-    $('.tweets-wrap').prepend( res_html )
-    $("#"+id).find('[data-toggle="tooltip"]').tooltip()
+    // $('.tweets-wrap').prepend( res_html )
+
+    // append new data into page
+    tweets_wrap.waterfall('prepend', res_html, function(){
+        $("#"+id).find('[data-toggle="tooltip"]').tooltip();
+        $("#"+id).addClass('show-tweet');
+    });
 }, false);
 
+// listen event open function
 eventSource.addEventListener('open', function(event) {
+    tweets_wrap.waterfall({
+    	itemCls: 'tt-wrap',
+    	fitWidth: true,
+    	colWidth: 340,
+        gutterHeight : 50,
+        checkImagesLoaded : false,
+        loadingMsg : false
+    });
+
     console.log('----- Connection was opened -----');
 }, false);
 
+// listen event close function
 eventSource.addEventListener('error', function(event) {
     console.log('------ Connection was closed -----');
 }, false);
