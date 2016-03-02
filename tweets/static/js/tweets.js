@@ -12,6 +12,12 @@ eventSource.addEventListener('message', function(e) {
     tweets_wrap.waterfall('prepend', res_html, function(){
         $("#"+id).find('[data-toggle="tooltip"]').tooltip();
         $("#"+id).addClass('show-tweet');
+
+        // if the tweets more than 100, then remove the rest of tweets
+        var tweets_length = tweets_wrap.find('.tt-wrap').length;
+        if(tweets_length > 100){
+            tweets_wrap.find('.tt-wrap').last().remove();
+        }
     });
 }, false);
 
