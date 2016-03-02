@@ -15,7 +15,7 @@ eventSource.addEventListener('message', function(e) {
 
         // if the tweets more than 100, then remove the rest of tweets
         var tweets_length = tweets_wrap.find('.tt-wrap').length;
-        if(tweets_length > 100){
+        if(tweets_length > 60){
             tweets_wrap.find('.tt-wrap').last().remove();
         }
     });

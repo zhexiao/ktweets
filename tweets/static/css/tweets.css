@@ -25,12 +25,12 @@
   width: 100%; }
 .tweets-wrap .show-tweet {
   display: block;
-  -khtml-transition: all 1s linear;
-  -webkit-transition: all 1s linear;
-  -moz-transition: all 1s linear;
-  -ms-transition: all 1s linear;
-  -o-transition: all 1s linear;
-  transition: all 1s linear; }
+  -khtml-transition: all 0.6s linear;
+  -webkit-transition: all 0.6s linear;
+  -moz-transition: all 0.6s linear;
+  -ms-transition: all 0.6s linear;
+  -o-transition: all 0.6s linear;
+  transition: all 0.6s linear; }
 
 .ti-lists .alert {
   display: inline-block;
