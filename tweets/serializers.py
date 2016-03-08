@@ -12,10 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-# twitter mention serializers
-class TwitterMentionSerializer(serializers.ModelSerializer):
+# twitter tracks serializers
+class TwitterTracksSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=True, read_only=True)
 
     class Meta:
-        model = TwitterMention
-        fields = ('id', 'name', 'user')
+        model = TwitterTracks
+        fields = ('id', 'text', 'user')

@@ -3,7 +3,7 @@ from django.http import HttpResponse, StreamingHttpResponse
 from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from tweets.models import TwitterMention
+from tweets.models import TwitterTracks
 from pprint import pprint
 
 import ujson as json
@@ -28,11 +28,11 @@ def get_ip(request):
 # home page
 @login_required
 def index(request):
-    mentions = request.user.tw_mention.all()
+    tw_tracks = request.user.tw_tracks.all()
 
     return render(request, 'tweets/index.html', {
         'section' : 'index',
-        'mentions' : mentions
+        'tw_tracks' : tw_tracks
     })
 
 
@@ -47,17 +47,17 @@ def stream_data(request):
         }
         red = redis.StrictRedis(**REDIS_CONF)
 
-        # get users mention data
-        mentions = request.user.tw_mention.values_list('name', flat=True).order_by('name')
-        # if exist mentions, get these data
-        if mentions:
-            mentions_with_tag = []
-            for men in mentions:
-                mentions_with_tag.append('@'+men)
-        # if not exist mentions, tracking heartbeat(@@hb) to keep stream live
-        else:
-            mentions_with_tag = ['@@hb']
+        # get users tracks data
+        tw_tracks = request.user.tw_tracks.values_list('text', flat=True).order_by('text')
 
+        # make tracks as a list
+        tw_tracks_lists = []
+        if tw_tracks:
+            for t_t in tw_tracks:
+                tw_tracks_lists.append(t_t)
+
+        # add a heartbeat track to make connection alive
+        tw_tracks_lists.append('__hb__')
 
         # start initial pubsub
         pubsub = red.pubsub()
@@ -67,8 +67,8 @@ def stream_data(request):
         red.publish('__clear__', kill_signal_data)
 
         # subscribe all data include the killer as well
-        mentions_with_tag.append('__clear__')
-        pubsub.subscribe(mentions_with_tag)
+        tw_tracks_lists.append('__clear__')
+        pubsub.subscribe(tw_tracks_lists)
 
         # listen published data
         for message in pubsub.listen():
@@ -149,20 +149,18 @@ def stream_parse(data, uniqid_id):
 @login_required
 def save_stream(request):
     if request.method == "POST":
-        name = request.POST['name']
-        type = request.POST['type']
+        text = request.POST['text']
 
-        if type == '@':
-            try:
-                tm = TwitterMention.objects.get(name=name)
-            except Exception as e:
-                tm = TwitterMention(name=name)
-                tm.save()
+        try:
+            tt = TwitterTracks.objects.get(text=text)
+        except Exception as e:
+            tt = TwitterTracks(text=text)
+            tt.save()
 
 
-            # add this mention id xref to user
-            current_user = request.user
-            tm.user.add(current_user)
+        # add this track id xref to user
+        current_user = request.user
+        tt.user.add(current_user)
 
     return HttpResponse(1)
 
@@ -171,14 +169,12 @@ def save_stream(request):
 def delete_stream(request):
     if request.method == "POST":
         id = request.POST['id']
-        type = request.POST['type']
 
-        if type == '@':
-            try:
-                tm = TwitterMention.objects.get(id=id)
-                current_user = request.user
-                tm.user.remove(current_user)
-            except Exception as e:
-                error_report(e)
+        try:
+            tt = TwitterTracks.objects.get(id=id)
+            current_user = request.user
+            tt.user.remove(current_user)
+        except Exception as e:
+            error_report(e)
 
     return HttpResponse(1)

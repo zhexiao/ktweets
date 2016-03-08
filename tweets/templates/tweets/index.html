@@ -9,20 +9,20 @@
         <div class="clearfix ti-input-wrap">
             <div class="form-group tiw-form-group">
                 <div class="input-group">
-                    <div class="input-group-addon tiw-sign">@</div>
+                    <div class="input-group-addon tiw-sign"><i class="fa fa-twitter"></i></div>
                     <input type="text" value="" placeholder="Type your search data ..." class="form-control ti-input" />
                 </div>
             </div>
 
-            <div class="dul-name-wrap" onclick="save_data(event);" data-type="@">Save</div>
+            <div class="dul-name-wrap" onclick="save_data(event);">Save</div>
             {% csrf_token %}
         </div>
 
         <div class="ti-lists clearfix">
-            {% for men in mentions %}
+            {% for tw_track in tw_tracks %}
                 <div class="alert alert-purple">
-                    @{{men.name}}
-                    <i class="fa fa-times" onclick="remove_data(event)" data-id="{{men.id}}" data-type="@"></i>
+                    {{tw_track.text}}
+                    <i class="fa fa-times" onclick="remove_data(event)" data-id="{{tw_track.id}}"></i>
                 </div>
             {% endfor %}
         </div>

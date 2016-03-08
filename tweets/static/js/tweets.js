@@ -45,13 +45,11 @@ eventSource.addEventListener('error', function(event) {
 var remove_data = function(event){
     var $obj = $(event.target),
         $parent = $obj.closest('.tweets-init'),
-        id = $obj.attr('data-id'),
-        type = $obj.attr('data-type');
+        id = $obj.attr('data-id');
 
     var data = {
         csrfmiddlewaretoken : $parent.find('input[name="csrfmiddlewaretoken"]').val(),
-        id : id,
-        type : type
+        id : id
     };
 
     $.ajax({
@@ -66,7 +64,7 @@ var remove_data = function(event){
 var save_data = function(event){
     var $obj = $(event.target),
         $parent = $obj.closest('.ti-input-wrap'),
-        name = $.trim( $parent.find('.ti-input').val() ),
+        text = $.trim( $parent.find('.ti-input').val() ),
         csrf = $parent.find('input[name="csrfmiddlewaretoken"]').val();
 
 
@@ -74,13 +72,12 @@ var save_data = function(event){
         csrfmiddlewaretoken : csrf
     };
 
-    if(name == ''){
+    if(text == ''){
         alert('Please enter a correct search data.');
         return;
     }
 
-    data['name'] = name;
-    data['type'] = $obj.attr('data-type');
+    data['text'] = text;
 
     $.ajax({
         type : 'post',
