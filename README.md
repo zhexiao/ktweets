@@ -5,6 +5,7 @@ This is description of kweets
 
 ## Table of Contents  
 - [Installation](#Installation)  
+- [Usage](#Usage)  
 
 
 
@@ -45,4 +46,18 @@ This is description of kweets
     $ pip install djangorestframework
     $ pip install markdown       # Markdown support for the browsable API.
     $ pip install django-filter  # Filtering support
+```
+
+
+
+## Usage
+<a name="Usage"/>
+- Running Web Server
+```shell
+    $ python manage.py runserver
+```
+
+- Running Twitter Streaming API
+```shell
+    $ python tweets/scripts/tw_streaming.py 
 ```
