@@ -2197,6 +2197,12 @@
       -o-transition: all 0.6s;
       transition: all 0.6s; }
 
+.tiw-note {
+  color: #999; }
+  .tiw-note small {
+    border-bottom: 1px solid #666;
+    margin-right: 10px; }
+
 body {
   font-family: 'Open Sans', sans-serif;
   color: #333;
