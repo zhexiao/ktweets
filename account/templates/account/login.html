@@ -6,11 +6,12 @@
 <div class="account-wrap">
     <div class="container ac-wrap">
         <h1 class="text-center aw-head">
+            <i class="fa fa-user"></i>
             Login
         </h1>
 
         {% if form.errors %}
-            <div class="form-error text-center">
+            <div class="notice error">
                 Your username and password didn't match.
             </div>
         {% endif %}
@@ -25,13 +26,11 @@
                         {{ field.help_text|safe }}
                         </div>
                     {% endif %}
-
-                    {{ field.errors }}
                 </div>
             {% endfor %}
 
             <input type="submit" class="btn btn-primary ac-submit" value="Login" />
-            <a href="{% url 'account:register' %}" class="btn btn-success">New User?</a>
+            <a href="{% url 'account:register' %}" class="btn btn-purple">New User?</a>
             <input type="hidden" name="next" value="{{ next }}" />
 
             <div class="text-center margin-top-10">

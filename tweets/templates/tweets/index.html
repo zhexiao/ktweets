@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="dul-name-wrap" onclick="save_data(event);">Save</div>
+            <div class="dul-name-wrap">Save</div>
             {% csrf_token %}
         </div>
 
@@ -26,7 +26,7 @@
             {% for tw_track in tw_tracks %}
                 <div class="alert alert-purple">
                     {{tw_track.text}}
-                    <i class="fa fa-times" onclick="remove_data(event)" data-id="{{tw_track.id}}"></i>
+                    <i class="fa fa-times track-data-remove" data-id="{{tw_track.id}}"></i>
                 </div>
             {% endfor %}
         </div>
@@ -36,4 +36,7 @@
 
     <script src="{% static "js/waterfall.js" %}"></script>
     <script src="{% static "js/tweets.js" %}"></script>
+    <script type="text/javascript">
+        tweets_js.init();
+    </script>
 {% endblock %}
