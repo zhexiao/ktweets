@@ -62,17 +62,35 @@ class Streaming:
 
                 if 'text' in item:
                     self.pool.spawn(self.redis_pub, item)
+                    gevent.sleep(1)
         except Exception as e:
             self.error_print(e)
 
 
     # redis publish method
+    # def redis_pub(self, tweet):
+    #     try:
+    #         for t_t in self.track_text:
+    #             if t_t in tweet['text']:
+    #                 # pprint( 'redis published, twitter id is %s'%(tweet['id_str']) )
+    #                 self.redis_conn.publish(t_t, json.dumps(tweet))
+    #     except Exception as e:
+    #         self.error_print(e)
+    
     def redis_pub(self, tweet):
         try:
-            for t_t in self.track_text:
-                if t_t in tweet['text']:
-                    # pprint( 'redis published, twitter id is %s'%(tweet['id_str']) )
-                    self.redis_conn.publish(t_t, json.dumps(tweet))
+            published = False
+
+            if not published:
+                for mention in tweet['entities']['user_mentions']:
+                    if '@'+mention['screen_name'] in self.track_text:
+                        published = True
+                        self.redis_conn.publish('@'+mention['screen_name'], json.dumps(tweet))
+
+            if not published:
+                for hashtag in tweet['entities']['hashtags']:
+                    if '#'+hashtag['text'] in self.track_text:
+                        self.redis_conn.publish('#'+hashtag['text'], json.dumps(tweet))
         except Exception as e:
             self.error_print(e)
 
