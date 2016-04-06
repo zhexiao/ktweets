@@ -4,14 +4,17 @@
 
 {% block content %}
 <div class="account-wrap">
-    <div class="container ac-wrap note-wrap">
-        <h1 class="text-center">
+    <div class="container ac-wrap">
+        <h1 class="text-center aw-head">
+            <i class="fa fa-check-circle"></i>
             Welcome {{ new_user.username }}!
         </h1>
-        <p>
-            Your account has been successfully created. Now you can
-            <a href="{% url 'account:login' %}">log in</a>
-        </p>
+
+        <div class="aw-desc">
+            <p>
+                Your account has been successfully created, you can <a href="{% url 'account:login' %}">log in</a> now.
+            </p>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -4,14 +4,18 @@
 
 {% block content %}
 <div class="account-wrap">
-    <div class="container ac-wrap note-wrap">
-        <h1 class="text-center">
+    <div class="container ac-wrap">
+        <h1 class="text-center aw-head">
+            <i class="fa fa-check-circle"></i>
             Logged out
         </h1>
-        <p>
-            You have been successfully logged out. You can
-            <a href="{% url 'account:login' %}">login again</a>.
-        </p>
+
+        <div class="aw-desc">
+            <p>
+                You have been successfully logged out. You can
+                <a href="{% url 'account:login' %}">login again</a>.
+            </p>
+        </div>
     </div>
 </div>
 {% endblock %}

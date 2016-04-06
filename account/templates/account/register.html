@@ -11,9 +11,19 @@
         </h1>
 
         {% if form.errors %}
-            <div class="notice error">
-                Register failed, please check your information.
-            </div>
+           <!-- Error messaging -->
+           <div class="notice error">
+               <p>There were some error(s) in the information you entered:</p>
+               {{ form.non_field_errors }}
+               <ul>
+                   {% for field in form %}
+                       {% if field.errors %}
+                           <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+                       {% endif %}
+                   {% endfor %}
+               </ul>
+           </div>
+           <!-- /Error messaging -->
         {% endif %}
 
         <form action="." method="post" class="ac-form">

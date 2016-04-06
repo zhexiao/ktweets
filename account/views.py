@@ -34,8 +34,11 @@ def register(request):
         if form.is_valid():
             # Create a new user object but avoid saving it yet
             new_user = form.save(commit=False)
+
             # Set the chosen password
             new_user.set_password( form.cleaned_data['password'] )
+            new_user.email = form.cleaned_data['email'] 
+            
             # Save the User object
             new_user.save()
             return render(request, 'account/register_done.html', {'new_user': new_user})
