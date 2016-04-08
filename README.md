@@ -113,6 +113,10 @@ This is description of kweets
             include uwsgi_params;
             uwsgi_pass unix:/tmp/kweets.sock;
         }
+
+        location /static/ {
+            root /vagrant/kweets;
+        }
     }
 ```
 
