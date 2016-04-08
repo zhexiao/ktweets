@@ -1,7 +1,3 @@
-a = ['@CNN', 'ccc', '@nba']
-b = '@nba'
-
-if b in a:
-    print('there')
-else:
-    print('not there')
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(os.path.join(BASE_DIR, "static"))
